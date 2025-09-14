@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>차곡</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+      body {
+        font-family: 'Pretendard', sans-serif;
+      }
+      @keyframes marquee-left {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+      }
+      @keyframes marquee-right {
+        from { transform: translateX(-50%); }
+        to { transform: translateX(0); }
+      }
+      .animate-marquee-left {
+        animation: marquee-left 40s linear infinite;
+      }
+      .animate-marquee-right {
+        animation: marquee-right 40s linear infinite;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/"
+  }
+}
+</script>
+</head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
