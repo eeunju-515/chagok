@@ -47,8 +47,8 @@ const OnboardingScreen: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-white">
-      <div className="pt-16 px-5">
+    <div className="fixed inset-0 flex flex-col bg-white overflow-hidden">
+      <div className="pt-16 px-5 w-full max-w-2xl mx-auto">
         <h1 className="text-2xl font-bold text-left text-[#202326] leading-[1.4]">
           매일 3분 퀴즈로<br />
           꼭 필요한 금융 지식을<br />
@@ -56,7 +56,7 @@ const OnboardingScreen: React.FC = () => {
         </h1>
       </div>
 
-      <div className="flex-grow w-full overflow-hidden flex flex-col justify-center space-y-4 -translate-x-16">
+      <div className="flex-grow w-full overflow-hidden flex flex-col justify-center space-y-4">
         <div className="flex w-max animate-marquee-left">
           <MarqueeRowContent tags={row1Tags} />
           <MarqueeRowContent tags={row1Tags} />
@@ -71,7 +71,7 @@ const OnboardingScreen: React.FC = () => {
         </div>
       </div>
 
-      <div className="p-5">
+      <footer className="p-5 flex-shrink-0 pb-[calc(1.25rem+env(safe-area-inset-bottom))] w-full max-w-2xl mx-auto">
         <div className="text-center text-xs text-[#A2A2A2] bg-[#F3F3F3] p-3 rounded-lg mb-4">
           차곡은 아직 베타 버전이라 캐시를 삭제하거나 시크릿 모드를 사용하면 학습 기록이 저장되지 않으니 서비스 이용에 참고해 주세요!
         </div>
@@ -81,7 +81,7 @@ const OnboardingScreen: React.FC = () => {
         >
           시작하기
         </button>
-      </div>
+      </footer>
     </div>
   );
 };

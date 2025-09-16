@@ -61,9 +61,27 @@ export const CircleIcon: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 export const CoinIcon: React.FC<{ className?: string }> = ({ className }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" fill="none" width="28" height="28">
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" fill="none">
     <circle cx="14" cy="14" r="14" fill="#FEDA2C"/>
     <circle cx="14" cy="14" r="11" fill="#FCAA17"/>
     <path d="M14 9.5L15.393 12.637L18.806 13.146L16.403 15.477L16.946 18.854L14 17.202L11.054 18.854L11.597 15.477L9.194 13.146L12.607 12.637L14 9.5Z" fill="white"/>
   </svg>
+);
+
+export const UserCircleIcon: React.FC<{ className?: string }> = ({ className }) => (
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-5.5-2.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM10 12a5.99 5.99 0 00-4.793 2.39A6.483 6.483 0 0010 16.5a6.483 6.483 0 004.793-2.11A5.99 5.99 0 0010 12z" clipRule="evenodd" />
+  </svg>
+);
+
+export const MenuIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+        <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+    </svg>
+);
+
+export const StarIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg className={className} viewBox="0 0 28 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M14 9.5L15.393 12.637L18.806 13.146L16.403 15.477L16.946 18.854L14 17.202L11.054 18.854L11.597 15.477L9.194 13.146L12.607 12.637L14 9.5Z" />
+    </svg>
 );

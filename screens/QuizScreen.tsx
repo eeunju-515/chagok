@@ -29,7 +29,7 @@ const FeedbackModal: React.FC<{ isCorrect: boolean; explanation: string; onConti
 
 
 const QuizScreen: React.FC = () => {
-    const { setCurrentScreen, activeLesson, setLessonResult } = useContext(AppContext);
+    const { setCurrentScreen, activeLesson, setLessonResult, updateUserData, userData } = useContext(AppContext);
     const [questionIndex, setQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [showModal, setShowModal] = useState(false);
@@ -132,8 +132,8 @@ const QuizScreen: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col h-screen bg-white">
-            <header className="flex w-full items-center justify-between px-5 py-4 bg-white border-b border-solid border-neutral-200">
+        <div className="fixed inset-0 flex flex-col bg-white overflow-hidden">
+            <header className="flex-shrink-0 flex w-full items-center justify-between px-5 py-4 bg-white border-b border-solid border-neutral-200">
                 <button onClick={() => setCurrentScreen(Screen.MAIN)} className="p-1">
                     <XMarkIcon className="w-6 h-6 text-[#202326]" />
                 </button>
@@ -141,14 +141,14 @@ const QuizScreen: React.FC = () => {
                 <div className="w-8"></div>
             </header>
             
-            <div className="px-5 pt-4">
+            <div className="flex-shrink-0 px-5 pt-4">
                 <div className="w-full h-2 bg-neutral-150 rounded-full overflow-hidden">
                     <div className="bg-[#03AA72] h-2 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
                 </div>
             </div>
 
-            <main className="flex-grow flex flex-col p-5 justify-between">
-                <div className="pt-4">
+            <main className="flex-grow flex flex-col p-5 justify-between overflow-hidden w-full max-w-2xl mx-auto">
+                <div className="pt-4 overflow-hidden">
                     <h2 className="text-xl font-medium text-neutral-600 text-left leading-relaxed">
                        {currentQuiz.question.split('____').map((part, index, array) => (
                             <React.Fragment key={index}>
@@ -158,7 +158,7 @@ const QuizScreen: React.FC = () => {
                         ))}
                     </h2>
                 </div>
-                <div className="pb-4">
+                <div className="pb-4 pt-4 overflow-hidden">
                     {renderOptions(currentQuiz)}
                 </div>
             </main>

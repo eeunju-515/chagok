@@ -18,8 +18,8 @@ const LessonIntroScreen: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-white">
-      <header className="bg-white flex items-center p-5 border-b border-neutral-200">
+    <div className="fixed inset-0 flex flex-col bg-white overflow-hidden">
+      <header className="flex-shrink-0 bg-white flex items-center p-5 border-b border-neutral-200">
         <button onClick={() => setCurrentScreen(Screen.MAIN)} className="p-1 -ml-1">
           <ChevronLeftIcon className="w-6 h-6 text-[#202326]" />
         </button>
@@ -27,7 +27,7 @@ const LessonIntroScreen: React.FC = () => {
         <div className="w-8"></div> {/* Spacer to balance the back button */}
       </header>
 
-      <main className="flex-grow flex flex-col p-5 pt-9">
+      <main className="flex-grow flex flex-col p-5 pt-9 w-full max-w-2xl mx-auto">
           <h2 className="text-xl font-semibold text-[#202326] leading-[1.4] mb-2">
             {activeLesson.title}
           </h2>
@@ -38,7 +38,7 @@ const LessonIntroScreen: React.FC = () => {
           </div>
       </main>
 
-      <footer className="p-5">
+      <footer className="flex-shrink-0 p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] w-full max-w-2xl mx-auto">
         <button
           onClick={() => setCurrentScreen(Screen.QUIZ)}
           className="w-full bg-[#03AA72] text-white py-4 rounded-lg text-base font-bold"

@@ -96,20 +96,22 @@ const PartSelectionScreen: React.FC = () => {
             </header>
 
             <main className="p-5">
-                {CURRICULUM_DATA.map((part, index) => {
-                    const isLocked = part.courses.length === 0;
-                    const progress = getPartProgress(part.id);
-                    return (
-                        <PartCard 
-                            key={part.id} 
-                            part={part} 
-                            index={index} 
-                            progress={progress} 
-                            isLocked={isLocked}
-                            onLockedClick={handleLockedClick}
-                        />
-                    );
-                })}
+                <div className="max-w-2xl mx-auto">
+                    {CURRICULUM_DATA.map((part, index) => {
+                        const isLocked = part.courses.length === 0;
+                        const progress = getPartProgress(part.id);
+                        return (
+                            <PartCard 
+                                key={part.id} 
+                                part={part} 
+                                index={index} 
+                                progress={progress} 
+                                isLocked={isLocked}
+                                onLockedClick={handleLockedClick}
+                            />
+                        );
+                    })}
+                </div>
             </main>
             {showToast && <Toast message="곧 만나볼 수 있어요!" />}
         </div>

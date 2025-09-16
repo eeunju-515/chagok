@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -10,6 +9,16 @@
       @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
       body {
         font-family: 'Pretendard', sans-serif;
+        background-color: #FFFFFF;
+        overscroll-behavior: none;
+      }
+      /* Hide scrollbar for all elements */
+      ::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+      }
+      body, main {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
       }
       @keyframes marquee-left {
         from { transform: translateX(0); }
@@ -24,6 +33,10 @@
       }
       .animate-marquee-right {
         animation: marquee-right 40s linear infinite;
+      }
+      .h-screen-real {
+        height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+        height: calc(var(--vh, 1vh) * 100);
       }
     </style>
   <script type="importmap">

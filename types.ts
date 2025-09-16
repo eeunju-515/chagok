@@ -1,6 +1,5 @@
 
 export enum Screen {
-  SPLASH = 'SPLASH',
   ONBOARDING = 'ONBOARDING',
   MAIN = 'MAIN',
   PART_SELECTION = 'PART_SELECTION',

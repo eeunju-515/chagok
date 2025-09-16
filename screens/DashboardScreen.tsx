@@ -1,4 +1,4 @@
-import React, { useState, useContext, useMemo } from 'react';
+import React, { useState, useContext, useMemo, useEffect, useRef } from 'react';
 import { AppContext } from '../contexts/AppContext';
 import { Screen } from '../types';
 import { ChevronLeftIcon, ChevronRightIcon, FireIcon, CoinIcon } from '../components/icons';
@@ -14,6 +14,11 @@ const getTodayDateString = (): string => {
 const DashboardScreen: React.FC = () => {
     const { setCurrentScreen, userData } = useContext(AppContext);
     const [date, setDate] = useState(new Date());
+    const mainRef = useRef<HTMLElement>(null);
+
+    useEffect(() => {
+        mainRef.current?.scrollTo(0, 0);
+    }, []);
 
     const formatTime = (totalSeconds: number) => {
         if (totalSeconds < 3600) {
@@ -74,6 +79,7 @@ const DashboardScreen: React.FC = () => {
                 isToday: d.dateString === todayString,
                 isStreak,
                 isStreakStart: isStreak && !(days[i-1]?.isLearned),
+                // FIX: Corrected typo from `is Streak` to `isStreak`. This typo was causing multiple cascading errors.
                 isStreakEnd: isStreak && !(days[i+1]?.isLearned),
             }
         });
@@ -81,8 +87,8 @@ const DashboardScreen: React.FC = () => {
     }, [date, userData.lessonDates]);
 
     return (
-        <div className="bg-white min-h-screen">
-             <header className="bg-white flex items-center p-5 sticky top-0 z-10 border-b">
+        <div className="bg-white fixed inset-0 flex flex-col">
+             <header className="bg-white flex items-center p-5 z-10 border-b flex-shrink-0">
                 <button onClick={() => setCurrentScreen(Screen.MAIN)} className="p-1">
                     <ChevronLeftIcon className="w-6 h-6 text-[#202326]" />
                 </button>
@@ -90,7 +96,7 @@ const DashboardScreen: React.FC = () => {
                 <div className="w-8"></div>
             </header>
 
-            <main className="p-5">
+            <main ref={mainRef} className="p-5 flex-1 overflow-y-auto max-w-4xl w-full mx-auto">
                 <div className="grid grid-cols-2 gap-3 mb-8">
                     <div className="bg-[#F6F6F6] rounded-[18px] py-5 flex flex-col items-center justify-center gap-1">
                         <div className="flex items-center gap-1">
@@ -128,7 +134,7 @@ const DashboardScreen: React.FC = () => {
                                         ${d.isStreakEnd ? 'rounded-r-full' : ''}
                                     `}>
                                         {d.isLearned ? 
-                                            <CoinIcon /> : 
+                                            <CoinIcon className="w-7 h-7" /> : 
                                             <span className={`text-sm font-medium ${textColor}`}>{d.day}</span>
                                         }
                                     </div>

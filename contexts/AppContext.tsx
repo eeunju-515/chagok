@@ -1,10 +1,11 @@
+
 import React, { createContext, useState, ReactNode, useMemo } from 'react';
 import { Screen, Lesson, UserData, AppContextType, Part, Course } from '../types';
 import { useUserData } from '../hooks/useUserData';
 import { CURRICULUM_DATA } from '../data/curriculum';
 
 const defaultContextValue: AppContextType = {
-  currentScreen: Screen.SPLASH,
+  currentScreen: Screen.ONBOARDING,
   setCurrentScreen: () => {},
   activeLesson: null,
   setActiveLesson: () => {},
@@ -22,7 +23,7 @@ const defaultContextValue: AppContextType = {
 export const AppContext = createContext<AppContextType>(defaultContextValue);
 
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [currentScreen, setCurrentScreen] = useState<Screen>(Screen.SPLASH);
+  const [currentScreen, setCurrentScreen] = useState<Screen>(Screen.ONBOARDING);
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
   const [lessonResult, setLessonResult] = useState<{ accuracy: number; time: number } | null>(null);
   const [hasOnboarded, setHasOnboarded] = useState<boolean>(false);

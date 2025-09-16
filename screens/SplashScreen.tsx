@@ -26,7 +26,7 @@ const SplashScreen: React.FC = () => {
     }, [setCurrentScreen, hasOnboarded]);
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen w-full bg-[#03AA72]">
+        <div className="fixed inset-0 flex flex-col items-center justify-center w-full bg-[#03AA72]">
             <div className="flex items-center justify-center space-x-2 mb-6">
                 <Blob1 />
                 <Blob2 />

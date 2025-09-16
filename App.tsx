@@ -3,7 +3,6 @@ import React, { useContext, useEffect } from 'react';
 import { AppContext } from './contexts/AppContext';
 import { Screen } from './types';
 
-import SplashScreen from './screens/SplashScreen';
 import OnboardingScreen from './screens/OnboardingScreen';
 import MainScreen from './screens/MainScreen';
 import PartSelectionScreen from './screens/PartSelectionScreen';
@@ -22,15 +21,29 @@ const App: React.FC = () => {
       setHasOnboarded(true);
       setCurrentScreen(Screen.MAIN);
     } else {
-      setCurrentScreen(Screen.SPLASH);
+      setCurrentScreen(Screen.ONBOARDING);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    const setViewportHeight = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    setViewportHeight();
+    window.addEventListener('resize', setViewportHeight);
+    window.addEventListener('orientationchange', setViewportHeight);
+    
+    return () => {
+      window.removeEventListener('resize', setViewportHeight);
+      window.removeEventListener('orientationchange', setViewportHeight);
+    };
+  }, []);
+
   const renderScreen = () => {
     switch (currentScreen) {
-      case Screen.SPLASH:
-        return <SplashScreen />;
       case Screen.ONBOARDING:
         return <OnboardingScreen />;
       case Screen.MAIN:
@@ -51,7 +64,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="bg-neutral-000 min-h-screen max-w-md mx-auto shadow-lg">
+    <div className="bg-neutral-000 min-h-screen">
        <div className="relative w-full h-full">
          {renderScreen()}
        </div>

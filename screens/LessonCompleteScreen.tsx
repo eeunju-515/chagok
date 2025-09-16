@@ -1,3 +1,4 @@
+
 import React, { useContext, useEffect } from 'react';
 import { AppContext } from '../contexts/AppContext';
 import { Screen } from '../types';
@@ -93,8 +94,8 @@ const LessonCompleteScreen: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col h-screen bg-white">
-            <main className="flex-grow p-5 pt-9">
+        <div className="fixed inset-0 flex flex-col bg-white overflow-hidden">
+            <main className="flex-grow p-5 pt-9 w-full max-w-2xl mx-auto overflow-hidden">
                 <div className="inline-flex items-center justify-center gap-2.5 px-3 py-1.5 bg-[#E2FAF2] rounded-xl">
                     <span className="text-xs font-semibold text-[#03AA72]">
                         {activeLesson.title}
@@ -105,7 +106,7 @@ const LessonCompleteScreen: React.FC = () => {
                     오늘도 금융 레벨 +1 상승!
                 </h1>
 
-                <section className="mt-12 space-y-8">
+                <section className="mt-8 space-y-6">
                     <article className="flex flex-col items-start gap-1.5">
                         <h2 className="text-sm font-semibold text-[#3E3E3E]">
                             💡 핵심만 쏙!
@@ -125,8 +126,8 @@ const LessonCompleteScreen: React.FC = () => {
                 </section>
             </main>
 
-            <footer className="p-5">
-                 <section className="grid grid-cols-3 gap-3 mb-8 text-center">
+            <footer className="flex-shrink-0 p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] w-full max-w-2xl mx-auto">
+                 <section className="grid grid-cols-3 gap-3 mb-4 text-center">
                     <div className="bg-[#F6F6F6] p-4 rounded-2xl flex flex-col justify-center">
                         <p className="text-sm text-[#7E7E7E]">정답률</p>
                         <p className="text-xl font-bold text-[#3E3E3E] mt-1">{lessonResult.accuracy}%</p>
