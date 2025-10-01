@@ -1,4 +1,5 @@
 
+
 import React, { useContext, useMemo, useRef, useState, forwardRef, useEffect } from 'react';
 import { AppContext } from '../contexts/AppContext';
 import { Screen, Part, Lesson, Course } from '../types';
@@ -23,23 +24,34 @@ const PartCard = forwardRef<HTMLButtonElement, { part: Part, isActive: boolean, 
     const iconSrc = partIcons[part.id] || partIcons['part_01'];
 
     return (
-        <button ref={ref} onClick={onClick} className={`flex flex-col flex-shrink-0 w-[140px] h-[160px] bg-white rounded-2xl p-3.5 relative shadow-sm transition-all duration-300 text-left ${isActive ? 'border-2 border-[#03AA72]' : ''}`}>
-            <div className="flex justify-between items-start">
-                <span className={`inline-block px-1.5 py-0.5 rounded-md text-xs font-semibold bg-gray-100 text-gray-500`}>
-                    파트 {CURRICULUM_DATA.findIndex(p => p.id === part.id) + 1}
-                </span>
-                {isLocked ? (
-                    <LockClosedIcon className="w-4 h-4 text-gray-300" />
-                ) : isCompleted ? (
-                    <CheckCircleIcon className="w-5 h-5 text-[#03AA72]" />
-                ) : isInProgress ? (
-                    <span className="text-xs font-bold text-[#03AA72]">진행 중</span>
-                ) : null}
-            </div>
-            <div className="flex-grow flex flex-col justify-end mt-2">
-                <h3 className="text-base font-bold text-gray-800 leading-tight">{part.title}</h3>
-                <p className="text-xs text-gray-400 mt-0.5">레슨 {totalLessons}</p>
-                <div className="mt-auto self-end">
+        <button 
+            ref={ref} 
+            onClick={onClick} 
+            className={`flex flex-col justify-between flex-shrink-0 w-[140px] h-[160px] bg-white rounded-2xl p-3.5 shadow-sm transition-all duration-300 text-left ${isActive ? 'border-2 border-[#03AA72]' : ''}`}
+        >
+            <div className="w-full flex flex-col flex-grow">
+                {/* Header */}
+                <div className="flex justify-between items-start w-full">
+                    <span className={`inline-block px-1.5 py-0.5 rounded-md text-xs font-semibold bg-gray-100 text-gray-500`}>
+                        파트 {CURRICULUM_DATA.findIndex(p => p.id === part.id) + 1}
+                    </span>
+                    {isLocked ? (
+                        <LockClosedIcon className="w-4 h-4 text-gray-300" />
+                    ) : isCompleted ? (
+                        <CheckCircleIcon className="w-5 h-5 text-[#03AA72]" />
+                    ) : isInProgress ? (
+                        <span className="text-xs font-bold text-[#03AA72]">진행 중</span>
+                    ) : null}
+                </div>
+                
+                {/* Text Content */}
+                <div className="mt-2 w-full">
+                    <h3 className="text-base font-bold text-gray-800 leading-tight">{part.title}</h3>
+                    <p className="text-xs text-gray-400 mt-0.5">레슨 {totalLessons}</p>
+                </div>
+
+                {/* Spacer and Icon area */}
+                <div className="flex-grow flex items-end justify-end w-full">
                      <img src={iconSrc} alt={part.title} className="w-12 h-12" />
                 </div>
             </div>
@@ -75,7 +87,6 @@ const CurriculumSection: React.FC = () => {
         }
     }
     if (!inProgressPartId && CURRICULUM_DATA.length > 0) {
-        // FIX: Replaced `findLastIndex` with a reverse for-loop for wider browser compatibility.
         let lastCompletedPartIndex = -1;
         for (let i = CURRICULUM_DATA.length - 1; i >= 0; i--) {
             if (getPartProgress(CURRICULUM_DATA[i].id) === 100) {
@@ -89,6 +100,17 @@ const CurriculumSection: React.FC = () => {
              inProgressPartId = CURRICULUM_DATA[0].id;
         }
     }
+    
+    useEffect(() => {
+        if(inProgressPartId && userData.lastPart !== inProgressPartId) {
+            const firstPartProgress = getPartProgress(CURRICULUM_DATA[0].id);
+            // Only update if the user hasn't made any progress yet and is still on the default part 1
+            if (userData.lastPart === CURRICULUM_DATA[0].id && firstPartProgress === 0 && completedLessons === 0) {
+                 updateUserData({ lastPart: inProgressPartId });
+            }
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [inProgressPartId]);
 
 
     useEffect(() => {
@@ -108,9 +130,9 @@ const CurriculumSection: React.FC = () => {
             }
         };
 
-        const animationFrameId = requestAnimationFrame(scrollOnNextFrame);
+        const timer = setTimeout(scrollOnNextFrame, 0);
 
-        return () => cancelAnimationFrame(animationFrameId);
+        return () => clearTimeout(timer);
     }, [userData.lastPart]);
 
 

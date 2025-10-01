@@ -1,5 +1,17 @@
 {
   "name": "FinEdu",
   "description": "금융 학습 서비스 FinEdu",
-  "requestFramePermissions": []
+  "requestFramePermissions": [],
+  "icons": [
+    {
+      "src": "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FdsnNKs%2FbtsQXJOoymw%2FAAAAAAAAAAAAAAAAAAAAAFwuuVLNsCmx0PmA9RX5nUwEt7u8I5ZwH6lcQYWJBKN8%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1761922799%26allow_ip%3D%26allow_referer%3D%26signature%3DXV1ZJMgEjYe6CUZ9avMNxJ%252Bgj84%253D",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FdsnNKs%2FbtsQXJOoymw%2FAAAAAAAAAAAAAAAAAAAAAFwuuVLNsCmx0PmA9RX5nUwEt7u8I5ZwH6lcQYWJBKN8%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1761922799%26allow_ip%3D%26allow_referer%3D%26signature%3DXV1ZJMgEjYe6CUZ9avMNxJ%252Bgj84%253D",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
