@@ -1,25 +1,24 @@
-
 import React, { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../contexts/AppContext';
 import { Screen, Quiz } from '../types';
-import { XMarkIcon, CircleIcon } from '../components/icons';
+import { XMarkIcon } from '../components/icons';
 
 const FeedbackModal: React.FC<{ isCorrect: boolean; explanation: string; onContinue: () => void }> = ({ isCorrect, explanation, onContinue }) => (
-    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-end justify-center z-20">
-        <div className="bg-white w-full rounded-t-[24px] pt-5 pb-3 px-5 max-w-md mx-auto shadow-[0px_-4px_20px_rgba(0,0,0,0.04)]">
-            <div className="flex flex-col items-start gap-1.5 mb-3">
-                <h2 className="text-base font-semibold text-neutral-600">
-                    {isCorrect ? '정답이에요!' : '다시 시도해 보세요!'}
+    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-20 px-5">
+        <div className="bg-white w-full rounded-[24px] p-5 max-w-md mx-auto shadow-lg">
+            <div className="flex flex-col items-start gap-1.5 mb-4">
+                <h2 className="text-2xl font-bold text-neutral-800 mb-2">
+                    {isCorrect ? '정답이에요! 🎉' : '아쉬워요, 다시 확인해볼까요?'}
                 </h2>
-                <div className={`w-full p-3 rounded-[14px] ${isCorrect ? 'bg-[#FFF2E4]' : 'bg-[#FCE6E7]'}`}>
-                    <p className="text-base font-medium text-neutral-500 leading-relaxed">
+                <div className={`w-full p-4 rounded-[14px] ${isCorrect ? 'bg-[#FFF2E4]' : 'bg-[#FCE6E7]'}`}>
+                    <p className="text-lg font-medium text-neutral-600 leading-relaxed">
                         {explanation}
                     </p>
                 </div>
             </div>
             <button 
                 onClick={onContinue} 
-                className="w-full h-12 bg-neutral-600 text-white rounded-xl text-base font-bold"
+                className={`w-full h-12 text-white rounded-xl text-lg font-bold ${isCorrect ? 'bg-[#03AA72]' : 'bg-[#EE8085]'}`}
             >
                 계속하기
             </button>
@@ -102,11 +101,11 @@ const QuizScreen: React.FC = () => {
             case 'OX':
                 return (
                     <div className="grid grid-cols-2 gap-4">
-                        <button onClick={() => handleAnswerSelect('O')} disabled={incorrectAnswers.includes('O')} className="flex-1 h-[116px] flex items-center justify-center rounded-xl border border-solid border-[#E1E1E1] disabled:opacity-50">
-                            <CircleIcon className="w-12 h-12 text-[#03AA72]" />
+                        <button onClick={() => handleAnswerSelect('O')} disabled={incorrectAnswers.includes('O')} className="flex-1 h-[116px] flex items-center justify-center rounded-xl bg-[#D2E9FF] disabled:opacity-50">
+                            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F7XPvF%2FbtsQZTIATgT%2FAAAAAAAAAAAAAAAAAAAAAM8eq9YK6GKCr_NvKB6pfQeeAJhUwW6FqM533j5lsv6s%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1761922799%26allow_ip%3D%26allow_referer%3D%26signature%3DNvZKJrgo4nTpS7YEcm5PkP0sh9k%253D" alt="O" className="w-12 h-12" />
                         </button>
-                        <button onClick={() => handleAnswerSelect('X')} disabled={incorrectAnswers.includes('X')} className="flex-1 h-[116px] flex items-center justify-center rounded-xl border border-solid border-[#E1E1E1] disabled:opacity-50">
-                            <XMarkIcon className="w-12 h-12 text-[#EE8085]" />
+                        <button onClick={() => handleAnswerSelect('X')} disabled={incorrectAnswers.includes('X')} className="flex-1 h-[116px] flex items-center justify-center rounded-xl bg-[#FCE6E7] disabled:opacity-50">
+                            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FcqKRjE%2FbtsQ0cO0jYC%2FAAAAAAAAAAAAAAAAAAAAAG68zmwhKCKncNIsEV8paAAs-Gs9D_2d0oZZsXvvpkXP%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1761922799%26allow_ip%3D%26allow_referer%3D%26signature%3DVLmJ8d139OYeOGOlzADIwQ7rJ1o%253D" alt="X" className="w-12 h-12" />
                         </button>
                     </div>
                 );
@@ -119,7 +118,7 @@ const QuizScreen: React.FC = () => {
                                 key={option} 
                                 onClick={() => handleAnswerSelect(option)}
                                 disabled={incorrectAnswers.includes(option)}
-                                className="w-full p-4 border border-solid border-[#E1E1E1] rounded-[12px] text-left text-base font-medium text-[#202326] disabled:bg-neutral-100 disabled:text-neutral-300"
+                                className="w-full p-4 border border-solid border-[#E1E1E1] rounded-[12px] text-left text-lg font-medium text-[#202326] disabled:bg-neutral-100 disabled:text-neutral-300"
                             >
                                 {option}
                             </button>
@@ -137,7 +136,7 @@ const QuizScreen: React.FC = () => {
                 <button onClick={() => setCurrentScreen(Screen.MAIN)} className="p-1">
                     <XMarkIcon className="w-6 h-6 text-[#202326]" />
                 </button>
-                <div className="text-base font-semibold text-neutral-500">{questionIndex + 1} / {quizzes.length}</div>
+                <div className="text-lg font-semibold text-neutral-500">{questionIndex + 1} / {quizzes.length}</div>
                 <div className="w-8"></div>
             </header>
             
@@ -147,9 +146,9 @@ const QuizScreen: React.FC = () => {
                 </div>
             </div>
 
-            <main className="flex-grow flex flex-col p-5 justify-between overflow-hidden w-full max-w-2xl mx-auto">
+            <main className="flex-grow flex flex-col p-5 overflow-hidden w-full max-w-2xl mx-auto">
                 <div className="pt-4 overflow-hidden">
-                    <h2 className="text-xl font-medium text-neutral-600 text-left leading-relaxed">
+                    <h2 className="text-2xl font-medium text-neutral-600 text-left leading-relaxed">
                        {currentQuiz.question.split('____').map((part, index, array) => (
                             <React.Fragment key={index}>
                                 {part}
@@ -158,7 +157,7 @@ const QuizScreen: React.FC = () => {
                         ))}
                     </h2>
                 </div>
-                <div className="pb-4 pt-4 overflow-hidden">
+                <div className="flex-grow flex flex-col justify-start pt-24">
                     {renderOptions(currentQuiz)}
                 </div>
             </main>

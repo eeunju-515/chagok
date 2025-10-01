@@ -1,25 +1,19 @@
 
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { AppContext } from '../contexts/AppContext';
 import { Screen, Part } from '../types';
 import { CURRICULUM_DATA } from '../data/curriculum';
 import { ChevronLeftIcon, LockClosedIcon } from '../components/icons';
 
-const Toast: React.FC<{ message: string }> = ({ message }) => (
-    <div className="fixed bottom-20 left-1/2 -translate-x-1/2 bg-black bg-opacity-70 text-white px-4 py-2 rounded-full text-sm animate-fade-in">
-        {message}
-    </div>
-);
-
-const PartCard: React.FC<{ part: Part; index: number, progress: number, isLocked: boolean, onLockedClick: () => void }> = ({ part, index, progress, isLocked, onLockedClick }) => {
-    const { setCurrentScreen, updateUserData } = useContext(AppContext);
+const PartCard: React.FC<{ part: Part; index: number, progress: number, isLocked: boolean }> = ({ part, index, progress, isLocked }) => {
+    const { setCurrentScreen, updateUserData, displayToast } = useContext(AppContext);
     
     const handleSelectPart = () => {
         if (!isLocked) {
             updateUserData({ lastPart: part.id });
             setCurrentScreen(Screen.MAIN);
         } else {
-            onLockedClick();
+            displayToast('이전 파트를 완료해야 진행할 수 있어요.');
         }
     };
 
@@ -32,15 +26,15 @@ const PartCard: React.FC<{ part: Part; index: number, progress: number, isLocked
                 <header className="flex items-center justify-between w-full">
                     <div className="flex items-center gap-2">
                          <span className="inline-flex items-center justify-center px-2 py-1 rounded-md bg-[#E7E7E7]">
-                            <span className="text-xs font-semibold text-[#7E7E7E]">파트 {index + 1}</span>
+                            <span className="text-sm font-semibold text-[#7E7E7E]">파트 {index + 1}</span>
                         </span>
-                        <h2 className="text-sm font-semibold text-[#7E7E7E]">{part.title}</h2>
+                        <h2 className="text-base font-semibold text-[#7E7E7E]">{part.title}</h2>
                     </div>
                     <LockClosedIcon className="w-5 h-5 text-[#A2A2A2]" />
                 </header>
                 <div className="mt-2">
-                    <h1 className="text-lg font-semibold text-[#7E7E7E]">{part.subtitle}</h1>
-                    <p className="text-sm text-[#A2A2A2] mt-1 leading-relaxed">{part.description}</p>
+                    <h1 className="text-xl font-semibold text-[#7E7E7E]">{part.subtitle}</h1>
+                    <p className="text-base text-[#A2A2A2] mt-1 leading-relaxed">{part.description}</p>
                 </div>
             </button>
         );
@@ -58,15 +52,15 @@ const PartCard: React.FC<{ part: Part; index: number, progress: number, isLocked
             <header className="flex items-center justify-between w-full">
                 <div className="flex items-center gap-2">
                     <span className={`inline-flex items-center justify-center px-2 py-1 rounded-md ${tagBg}`}>
-                        <span className="text-xs font-semibold text-white">파트 {index + 1}</span>
+                        <span className="text-sm font-semibold text-white">파트 {index + 1}</span>
                     </span>
-                    <h2 className="text-sm font-semibold text-[#3E3E3E]">{part.title}</h2>
+                    <h2 className="text-base font-semibold text-[#3E3E3E]">{part.title}</h2>
                 </div>
-                <span className={`text-sm font-medium ${progressColor}`}>{progress}%</span>
+                <span className={`text-base font-medium ${progressColor}`}>{progress}%</span>
             </header>
             <div className="mt-2">
-                <h1 className="text-lg font-semibold text-[#202326]">{part.subtitle}</h1>
-                <p className="text-sm text-[#7E7E7E] mt-1 leading-relaxed">{part.description}</p>
+                <h1 className="text-xl font-semibold text-[#202326]">{part.subtitle}</h1>
+                <p className="text-base text-[#7E7E7E] mt-1 leading-relaxed">{part.description}</p>
             </div>
         </button>
     );
@@ -75,15 +69,6 @@ const PartCard: React.FC<{ part: Part; index: number, progress: number, isLocked
 
 const PartSelectionScreen: React.FC = () => {
     const { setCurrentScreen, getPartProgress } = useContext(AppContext);
-    const [showToast, setShowToast] = useState(false);
-
-    const handleLockedClick = () => {
-        if (showToast) return;
-        setShowToast(true);
-        setTimeout(() => {
-            setShowToast(false);
-        }, 3000);
-    };
 
     return (
         <div className="bg-[#F3F3F3] min-h-screen">
@@ -91,15 +76,16 @@ const PartSelectionScreen: React.FC = () => {
                 <button onClick={() => setCurrentScreen(Screen.MAIN)} className="p-1">
                     <ChevronLeftIcon className="w-6 h-6 text-[#202326]" />
                 </button>
-                <h1 className="text-base font-semibold text-[#202326] mx-auto">파트 선택</h1>
+                <h1 className="text-lg font-semibold text-[#202326] mx-auto">파트 선택</h1>
                  <div className="w-8"></div>
             </header>
 
             <main className="p-5">
                 <div className="max-w-2xl mx-auto">
                     {CURRICULUM_DATA.map((part, index) => {
-                        const isLocked = part.courses.length === 0;
                         const progress = getPartProgress(part.id);
+                        const isLocked = index > 0 && getPartProgress(CURRICULUM_DATA[index - 1].id) < 100;
+
                         return (
                             <PartCard 
                                 key={part.id} 
@@ -107,13 +93,11 @@ const PartSelectionScreen: React.FC = () => {
                                 index={index} 
                                 progress={progress} 
                                 isLocked={isLocked}
-                                onLockedClick={handleLockedClick}
                             />
                         );
                     })}
                 </div>
             </main>
-            {showToast && <Toast message="곧 만나볼 수 있어요!" />}
         </div>
     );
 };

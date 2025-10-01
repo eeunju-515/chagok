@@ -1,5 +1,5 @@
 
-import React, { createContext, useState, ReactNode, useMemo } from 'react';
+import React, { createContext, useState, ReactNode, useMemo, useCallback } from 'react';
 import { Screen, Lesson, UserData, AppContextType, Part, Course } from '../types';
 import { useUserData } from '../hooks/useUserData';
 import { CURRICULUM_DATA } from '../data/curriculum';
@@ -18,6 +18,8 @@ const defaultContextValue: AppContextType = {
   getLessonStatus: () => 'locked',
   getPartProgress: () => 0,
   getCourseProgress: () => 0,
+  toast: { show: false, message: '' },
+  displayToast: () => {},
 };
 
 export const AppContext = createContext<AppContextType>(defaultContextValue);
@@ -28,6 +30,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [lessonResult, setLessonResult] = useState<{ accuracy: number; time: number } | null>(null);
   const [hasOnboarded, setHasOnboarded] = useState<boolean>(false);
   const { userData, updateUserData, isLoaded } = useUserData();
+  const [toast, setToast] = useState({ show: false, message: '' });
+
+  const displayToast = useCallback((message: string) => {
+    setToast({ show: true, message });
+    setTimeout(() => {
+      setToast({ show: false, message: '' });
+    }, 3000);
+  }, []);
 
   const getPartProgress = (partId: string): number => {
     if (!isLoaded) return 0;
@@ -66,6 +76,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         return 'completed';
     }
     
+    const partIndex = CURRICULUM_DATA.findIndex(p => p.id === part.id);
+    if (partIndex > 0) {
+        const previousPart = CURRICULUM_DATA[partIndex - 1];
+        const previousPartProgress = getPartProgress(previousPart.id);
+        if (previousPartProgress < 100) {
+            return 'locked';
+        }
+    }
+
     const nextLessonIdForPart = userData.nextLessonByPart[part.id];
     
     if (lessonId === nextLessonIdForPart) {
@@ -88,8 +107,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     updateUserData,
     getLessonStatus,
     getPartProgress,
-    getCourseProgress
-  }), [currentScreen, activeLesson, lessonResult, hasOnboarded, userData, updateUserData, isLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
+    getCourseProgress,
+    toast,
+    displayToast
+  }), [currentScreen, activeLesson, lessonResult, hasOnboarded, userData, updateUserData, isLoaded, toast]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!isLoaded) {
     return null; // or a loading spinner

@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import { UserData } from '../types';
 import { CURRICULUM_DATA } from '../data/curriculum';
@@ -26,7 +25,8 @@ const getInitialUserData = (): UserData => {
         lastAccessDate: '',
         completedLessons: {},
         totalLearningTime: 0,
-        lessonDates: []
+        lessonDates: [],
+        coins: 0
     };
 };
 

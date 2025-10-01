@@ -1,12 +1,11 @@
-
 export enum Screen {
   ONBOARDING = 'ONBOARDING',
   MAIN = 'MAIN',
   PART_SELECTION = 'PART_SELECTION',
-  LESSON_INTRO = 'LESSON_INTRO',
   QUIZ = 'QUIZ',
   LESSON_COMPLETE = 'LESSON_COMPLETE',
   DASHBOARD = 'DASHBOARD',
+  SETTINGS = 'SETTINGS',
 }
 
 export interface UserData {
@@ -17,6 +16,7 @@ export interface UserData {
   completedLessons: { [lessonId: string]: boolean };
   totalLearningTime: number; // in seconds
   lessonDates: string[]; // YYYY-MM-DD
+  coins: number;
 }
 
 export interface Quiz {
@@ -67,4 +67,6 @@ export interface AppContextType {
   getLessonStatus: (lessonId: string, part: Part, course: Course) => 'completed' | 'next' | 'locked';
   getPartProgress: (partId: string) => number;
   getCourseProgress: (courseId: string) => number;
+  toast: { show: boolean; message: string };
+  displayToast: (message: string) => void;
 }

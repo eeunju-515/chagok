@@ -1,4 +1,3 @@
-
 import React, { useContext } from 'react';
 import { AppContext } from '../contexts/AppContext';
 import { Screen } from '../types';
@@ -8,7 +7,7 @@ const MarqueeRowContent: React.FC<{ tags: { text: string; style: string }[] }> =
     {tags.map((tag, index) => (
       <span
         key={index}
-        className={`px-3.5 py-2.5 rounded-[40px] text-sm font-semibold whitespace-nowrap mx-1.5 ${tag.style}`}
+        className={`px-3.5 py-2.5 rounded-[40px] text-base font-semibold whitespace-nowrap mx-1.5 ${tag.style}`}
       >
         {tag.text}
       </span>
@@ -49,11 +48,12 @@ const OnboardingScreen: React.FC = () => {
   return (
     <div className="fixed inset-0 flex flex-col bg-white overflow-hidden">
       <div className="pt-16 px-5 w-full max-w-2xl mx-auto">
-        <h1 className="text-2xl font-bold text-left text-[#202326] leading-[1.4]">
-          매일 3분 퀴즈로<br />
-          꼭 필요한 금융 지식을<br />
-          <span className="text-[#03AA72]">차곡차곡</span> 쌓아봐요
+        <h1 className="text-3xl font-extrabold text-[#202326]">
+          FinEdu
         </h1>
+        <p className="text-lg text-[#3E3E3E] mt-2 leading-relaxed">
+          부담없이 학습하는 금융 퀴즈 서비스
+        </p>
       </div>
 
       <div className="flex-grow w-full overflow-hidden flex flex-col justify-center space-y-4">
@@ -72,12 +72,12 @@ const OnboardingScreen: React.FC = () => {
       </div>
 
       <footer className="p-5 flex-shrink-0 pb-[calc(1.25rem+env(safe-area-inset-bottom))] w-full max-w-2xl mx-auto">
-        <div className="text-center text-xs text-[#A2A2A2] bg-[#F3F3F3] p-3 rounded-lg mb-4">
-          차곡은 아직 베타 버전이라 캐시를 삭제하거나 시크릿 모드를 사용하면 학습 기록이 저장되지 않으니 서비스 이용에 참고해 주세요!
+        <div className="text-center text-sm text-[#A2A2A2] bg-[#F3F3F3] p-3 rounded-lg mb-4">
+          FinEdu는 아직 베타 버전이라 캐시를 삭제하거나 시크릿 모드를 사용하면 학습 기록이 저장되지 않으니 서비스 이용에 참고해 주세요!
         </div>
         <button
           onClick={handleStart}
-          className="w-full bg-[#03AA72] text-white py-4 rounded-lg text-base font-bold"
+          className="w-full bg-[#03AA72] text-white py-4 rounded-lg text-lg font-bold"
         >
           시작하기
         </button>
